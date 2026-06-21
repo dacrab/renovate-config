@@ -19,7 +19,7 @@
       "matchPackageNames": ["*"],
       "automerge": true,
       "automergeType": "pr",
-      "platformAutomerge": true
+      "platformAutomerge": false
     }
   ],
   "separateMinorPatch": false,
@@ -27,6 +27,6 @@
     "labels": ["security"],
     "automerge": true,
     "automergeType": "pr",
-    "platformAutomerge": true
+    "platformAutomerge": false
   }
 }
