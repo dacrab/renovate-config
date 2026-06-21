@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended"
   ],
+  "onboarding": false,
   "timezone": "Europe/Athens",
   "labels": ["dependencies"],
   "rebaseWhen": "behind-base-branch",
