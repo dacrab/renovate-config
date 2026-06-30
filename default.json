@@ -17,15 +17,13 @@
       "groupSlug": "all-non-major",
       "matchPackageNames": ["*"],
       "automerge": true,
-      "automergeType": "pr",
-      "platformAutomerge": false
+      "automergeType": "branch"
     }
   ],
   "separateMinorPatch": false,
   "vulnerabilityAlerts": {
     "labels": ["security"],
     "automerge": true,
-    "automergeType": "pr",
-    "platformAutomerge": false
+    "automergeType": "branch"
   }
 }
