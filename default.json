@@ -9,7 +9,6 @@
   "rebaseWhen": "behind-base-branch",
   "commitMessagePrefix": "chore",
   "commitMessageTopic": "{{depName}}",
-  "prCooldownDays": 3,
   "lockFileMaintenance": { "enabled": false },
   "packageRules": [
     {
