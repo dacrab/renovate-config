@@ -21,6 +21,14 @@
     }
   ],
   "separateMinorPatch": false,
+  "packageRules": [
+    {
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "^6.0.0",
+      "matchCurrentVersion": ">=6.0.0",
+      "description": "TypeScript 7 (native tsgo) has no JS programmatic API yet; astro check / @astrojs/language-server require 6.x. Revisit when https://github.com/withastro/roadmap/discussions/1321 lands."
+    }
+  ],
   "vulnerabilityAlerts": {
     "labels": ["security"],
     "automerge": true,
