@@ -14,12 +14,14 @@
   "osvVulnerabilityAlerts": true,
   "minimumReleaseAge": "3 days",
   "automergeSchedule": ["after 9am and before 11pm every day"],
+  "automergeStrategy": "squash",
+  "platformAutomerge": true,
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 5am on Monday"],
     "groupName": "lockfile maintenance",
     "automerge": true,
-    "automergeType": "branch"
+    "automergeType": "pr"
   },
   "packageRules": [
     {
@@ -29,19 +31,19 @@
       "matchCurrentVersion": ">=6.0.0"
     },
     {
-      "description": "Auto-merge grouped patch/minor updates once CI passes on the renovate branch",
+      "description": "Auto-merge grouped patch/minor updates via PR once CI passes (GitHub native auto-merge where available, Renovate-driven merge otherwise)",
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-non-major",
       "matchPackageNames": ["*"],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     }
   ],
   "vulnerabilityAlerts": {
     "labels": ["security"],
     "minimumReleaseAge": null,
     "automerge": true,
-    "automergeType": "branch"
+    "automergeType": "pr"
   }
 }

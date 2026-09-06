@@ -17,10 +17,10 @@ For Unity projects use `local>dacrab/renovate-config` instead (Renovate's `githu
 
 ## What it does
 
-- Groups all patch/minor updates into one `all non-major dependencies` update and auto-merges it via branch automerge (no PR when CI is green; a PR is raised as backup if checks fail or stay pending >24h)
+- Opens a PR for grouped patch/minor updates (`all non-major dependencies`) and auto-merges it via squash once CI passes — using GitHub's native auto-merge where the plan allows it, otherwise Renovate merges the PR itself once checks are green
 - Keeps major updates as regular PRs for manual review
 - Waits 3 days after a release before proposing it (`minimumReleaseAge`) to avoid bad publishes, and only automerges between 9am–11pm Athens time
-- Weekly lockfile maintenance (transitive dep refresh), auto-merged
+- Weekly lockfile maintenance PR (transitive dep refresh), auto-merged
 - Pins `typescript` to `^6` (TS 7 / tsgo lacks a programmatic API some tooling needs)
 - Labels security alerts `security` and auto-merges them immediately (exempt from the 3-day wait and schedules)
 - Checks dependencies against osv.dev in addition to GitHub advisories
@@ -29,11 +29,9 @@ For Unity projects use `local>dacrab/renovate-config` instead (Renovate's `githu
 
 ## Requirements
 
-`automergeType: "branch"` merges directly into the base branch without a PR, so:
-
-- Your CI must run on `renovate/**` branches (e.g. `push: { branches: [main, 'renovate/**'] }`), or the required status checks will never report and updates will not auto-merge.
-- Branch protection on the base branch must not require pull request reviews.
-- Renovate branches stuck with pending checks fall back to a PR after ~24h (`prNotPendingHours`).
+- CI must run on pull requests (the default) so checks report on the update PR before it merges.
+- Auto-merge needs at least one passing check to be meaningful; with no branch protection at all, Renovate merges immediately — enable "Require status checks" where your plan allows it.
+- On private repos on the free plan, GitHub's native auto-merge toggle and branch protection are unavailable — Renovate's own merge-after-checks handles those.
 
 ## Notes
 
