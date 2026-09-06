@@ -9,8 +9,18 @@
   "rebaseWhen": "behind-base-branch",
   "commitMessagePrefix": "chore",
   "commitMessageTopic": "{{depName}}",
-  "lockFileMaintenance": { "enabled": false },
   "separateMinorPatch": false,
+  "configMigration": true,
+  "osvVulnerabilityAlerts": true,
+  "minimumReleaseAge": "3 days",
+  "automergeSchedule": ["after 9am and before 11pm every day"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 5am on Monday"],
+    "groupName": "lockfile maintenance",
+    "automerge": true,
+    "automergeType": "branch"
+  },
   "packageRules": [
     {
       "description": "TypeScript 7 (native tsgo) has no JS programmatic API yet; astro check / @astrojs/language-server require 6.x. Revisit when https://github.com/withastro/roadmap/discussions/1321 lands.",
@@ -30,6 +40,7 @@
   ],
   "vulnerabilityAlerts": {
     "labels": ["security"],
+    "minimumReleaseAge": null,
     "automerge": true,
     "automergeType": "branch"
   }
