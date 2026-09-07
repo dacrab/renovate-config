@@ -17,9 +17,10 @@ For Unity projects use `local>dacrab/renovate-config` instead (Renovate's `githu
 
 ## What it does
 
-- Opens a PR for grouped patch/minor updates (`all non-major dependencies`) and auto-merges it via squash once CI passes — using GitHub's native auto-merge where the plan allows it, otherwise Renovate merges the PR itself once checks are green
+- Opens a PR for grouped patch/minor updates (`all non-major dependencies`) and auto-merges it via squash as soon as CI passes — using GitHub's native auto-merge where the plan allows it, otherwise Renovate merges the PR itself once checks are green
+- Throttles PR creation (max 3 open at a time, 1 new per hour) so updates merge as they're ready instead of landing as a burst
 - Keeps major updates as regular PRs for manual review
-- Waits 3 days after a release before proposing it (`minimumReleaseAge`) to avoid bad publishes, and only automerges between 9am–11pm Athens time
+- Waits 3 days after a release before proposing it (`minimumReleaseAge`) to avoid bad publishes
 - Weekly lockfile maintenance PR (transitive dep refresh), auto-merged
 - Pins `typescript` to `^6` (TS 7 / tsgo lacks a programmatic API some tooling needs)
 - Labels security alerts `security` and auto-merges them immediately (exempt from the 3-day wait and schedules)

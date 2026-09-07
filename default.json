@@ -13,9 +13,10 @@
   "configMigration": true,
   "osvVulnerabilityAlerts": true,
   "minimumReleaseAge": "3 days",
-  "automergeSchedule": ["after 9am and before 11pm every day"],
   "automergeStrategy": "squash",
   "platformAutomerge": true,
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 1,
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 5am on Monday"],
