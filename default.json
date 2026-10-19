@@ -37,6 +37,12 @@
       "description": "Require approval in the Dependency Dashboard before opening major PRs, so they do not occupy PR slots or CI time",
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "adapter-vercel 7 requires SvelteKit 3 (currently in next); SvelteKit 2 repos fail to build. Remove this rule when Kit 3 is stable.",
+      "matchPackageNames": ["@sveltejs/adapter-vercel"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ],
   "vulnerabilityAlerts": {

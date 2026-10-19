@@ -24,6 +24,7 @@ Renovate also auto-discovers a repository named `renovate-config` in the account
 - Requires approval in the Dependency Dashboard before opening major PRs, so they do not consume PR slots or CI time.
 - Waits 3 days before proposing npm releases (`security:minimumReleaseAgeNpm`), with the correct exemptions for lockfile maintenance, pin, and replacement updates. Digest updates are exempt because Renovate has no release timestamp for them.
 - Keeps `typescript` on 6.x until Astro tooling supports TypeScript 7.
+- Blocks `@sveltejs/adapter-vercel` 7.x until SvelteKit 3 is stable (v7 requires Kit 3, so it cannot build on Kit 2).
 - Checks dependencies against osv.dev and lists OSV CVEs in the Dependency Dashboard.
 - Labels security PRs `security` in addition to `dependencies`, and automerges them once checks pass. Security PRs skip the normal schedule and PR limits.
 - Runs lockfile maintenance before 4am on Monday and automerges it.
