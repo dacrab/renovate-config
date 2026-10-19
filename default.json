@@ -1,25 +1,15 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
-  "onboarding": false,
+  "extends": ["config:best-practices"],
   "timezone": "Europe/Athens",
   "labels": ["dependencies"],
-  "rebaseWhen": "behind-base-branch",
-  "commitMessagePrefix": "chore",
-  "commitMessageTopic": "{{depName}}",
-  "separateMinorPatch": false,
-  "configMigration": true,
-  "osvVulnerabilityAlerts": true,
-  "minimumReleaseAge": "3 days",
+  "schedule": ["before 6am on Sunday"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 0,
   "automergeStrategy": "squash",
-  "platformAutomerge": true,
-  "prConcurrentLimit": 3,
-  "prHourlyLimit": 1,
+  "dependencyDashboardOSVVulnerabilitySummary": "all",
+  "osvVulnerabilityAlerts": true,
   "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["before 5am on Monday"],
     "groupName": "lockfile maintenance",
     "automerge": true,
     "automergeType": "pr"
@@ -28,21 +18,29 @@
     {
       "description": "TypeScript 7 (native tsgo) has no JS programmatic API yet; astro check / @astrojs/language-server require 6.x. Revisit when https://github.com/withastro/roadmap/discussions/1321 lands.",
       "matchPackageNames": ["typescript"],
-      "allowedVersions": "^6.0.0",
-      "matchCurrentVersion": ">=6.0.0"
+      "allowedVersions": "^6.0.0"
     },
     {
-      "description": "Auto-merge grouped patch/minor updates via PR once CI passes (GitHub native auto-merge where available, Renovate-driven merge otherwise)",
-      "matchUpdateTypes": ["patch", "minor"],
+      "description": "Digest updates have no release timestamp, so the branch-level minimumReleaseAge check would stay pending forever (renovatebot/renovate#45236).",
+      "matchUpdateTypes": ["digest", "pinDigest"],
+      "minimumReleaseAge": null
+    },
+    {
+      "description": "Group and automerge non-major updates once CI is green",
+      "matchUpdateTypes": ["minor", "patch", "pin", "pinDigest", "digest"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-non-major",
-      "matchPackageNames": ["*"],
       "automerge": true,
       "automergeType": "pr"
+    },
+    {
+      "description": "Require approval in the Dependency Dashboard before opening major PRs, so they do not occupy PR slots or CI time",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
     }
   ],
   "vulnerabilityAlerts": {
-    "labels": ["security"],
+    "addLabels": ["security"],
     "minimumReleaseAge": null,
     "automerge": true,
     "automergeType": "pr"
