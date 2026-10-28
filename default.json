@@ -1,48 +1,57 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices"],
+  "extends": [
+    "config:best-practices",
+    "security:minimumReleaseAgeCrate"
+  ],
   "timezone": "Europe/Athens",
   "labels": ["dependencies"],
   "schedule": ["before 6am on Sunday"],
   "prConcurrentLimit": 5,
-  "prHourlyLimit": 0,
   "automergeStrategy": "squash",
+  "platformAutomerge": false,
   "dependencyDashboardOSVVulnerabilitySummary": "all",
   "osvVulnerabilityAlerts": true,
+  "postUpdateOptions": ["gomodTidy"],
   "lockFileMaintenance": {
-    "groupName": "lockfile maintenance",
-    "automerge": true,
-    "automergeType": "pr"
+    "automerge": true
   },
   "packageRules": [
     {
-      "description": "TypeScript 7 (native tsgo) has no JS programmatic API yet; astro check / @astrojs/language-server require 6.x. Revisit when https://github.com/withastro/roadmap/discussions/1321 lands.",
+      "description": "Keep TypeScript on 6.x while the repo is on 6.x: Astro's checker requires it. Repos already on 7.x keep getting 7.x updates.",
+      "matchDatasources": ["npm"],
       "matchPackageNames": ["typescript"],
+      "matchCurrentVersion": "<7.0.0",
       "allowedVersions": "^6.0.0"
     },
     {
-      "description": "Digest updates have no release timestamp, so the branch-level minimumReleaseAge check would stay pending forever (renovatebot/renovate#45236).",
+      "description": "Keep the go directive on the latest patch release so standard library security fixes are picked up. rangeStrategy is resolved before updates are classified, so it cannot be combined with matchUpdateTypes.",
+      "matchManagers": ["gomod"],
+      "matchDepNames": ["go"],
+      "matchDepTypes": ["golang"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "Digest updates have no release timestamp, so the npm minimum release age would keep them pending forever (renovatebot/renovate#45236).",
+      "matchDatasources": ["npm"],
       "matchUpdateTypes": ["digest", "pinDigest"],
       "minimumReleaseAge": null
     },
     {
-      "description": "Group and automerge non-major updates once CI is green",
+      "description": "Group and automerge non-major updates once checks pass",
       "matchUpdateTypes": ["minor", "patch", "pin", "pinDigest", "digest"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-non-major",
-      "automerge": true,
-      "automergeType": "pr"
+      "automerge": true
     },
     {
-      "description": "Require approval in the Dependency Dashboard before opening major PRs, so they do not occupy PR slots or CI time",
+      "description": "Require approval in the Dependency Dashboard before opening major PRs",
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true
     }
   ],
   "vulnerabilityAlerts": {
     "addLabels": ["security"],
-    "minimumReleaseAge": null,
-    "automerge": true,
-    "automergeType": "pr"
+    "automerge": true
   }
 }
